@@ -77,9 +77,9 @@ Here's an outline for the pipeline for soft (EM-based logistic regression):
 
 1. Extract features
 
-`python code/models/logreg/extrfeats.py data/sentments/train.json`
+`python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams --deps`
 
-`python code/models/logreg/extrfeats.py data/sentments/test.json`
+`python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams --deps`
 
 2. Run through logistic regression
 
