@@ -83,14 +83,14 @@ Here's an outline for the pipeline for soft (EM-based logistic regression):
 
 2. Run through logistic regression
 
-`python code/models/logreg/runlr.py data/sentments/train.json data/sentments/test.json code/models/logreg/train.mtx code/models/logreg/test.mtx` 
+`python code/models/logreg/runlr.py data/sentments/train.json data/sentments/test.json train_ng_dep.mtx test_ng_dep.mtx` 
 
-3. Evaluate
+3. Evaluate 
 
-`cat models/preds/em50.json | python code/eval/evaluation.py` 
+`cat code/models/preds/em50.json | python code/eval/evaluation.py`
 
 CODE DEPENDENCIES
 ============
-Requires
+Feature extraction requires 
 - Standford CoreNLP (https://stanfordnlp.github.io/CoreNLP/)
 - Standford CoreNLP pywrapper (https://github.com/brendano/stanford_corenlp_pywrapper)
