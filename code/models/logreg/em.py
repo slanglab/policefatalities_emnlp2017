@@ -88,7 +88,7 @@ def go_em(X, X_test, Y_test, E, Epos, toprint_test, C=0.1, Niter=5, trainfn=trai
     xx = trainfn(X, init_preds, C=C)
     cur_preds = xx['preds']
     #save the sent-level predictions (to be used in eval2)
-    output_file = '../preds/em0.json'
+    output_file = 'code/models/preds/em0.json'
     save_sent_level(X_test, toprint_test, output_file, xx['model'])
 
     #-------now set up for EM--------
@@ -118,7 +118,7 @@ def go_em(X, X_test, Y_test, E, Epos, toprint_test, C=0.1, Niter=5, trainfn=trai
         cur_preds = xx['preds']
 
         #save the sent-level predictions (to be used in eval2)
-        output_file = '../preds/em{0}.json'.format(itr)
+        output_file = 'code/models/preds/em{0}.json'.format(itr)
         print output_file
         save_sent_level(X_test, toprint_test, output_file, xx['model'])
 
