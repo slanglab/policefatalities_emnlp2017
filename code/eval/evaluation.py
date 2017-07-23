@@ -57,9 +57,11 @@ print "Number of mentions:", sum(len(xs) for xs in byname.itervalues())
 def neg_log_not_noisyor(scores):
     """
     Assume 'scores' are P(z_i=1) probabilities.
-    Calculate NoisyOR via:
-     log P(y_e=0) = sum_{i in M(e)} log(P(z_i=0))
-    -log P(y_e=0) = sum_{i in M(e)} log(1 - P(z_i=1))
+    Calculate (log of complement of NoisyOR prob):
+    log P(y_e=0) = sum_{i in M(e)} log(P(z_i=0))
+    Use log1p for numerical stability since log(P(z=0))=log(1-p(z=1))
+    Clip P(z_i=1) from being exactly 1.0 to ensure non-infinities in the
+    log(P(y=0)) aggregation.
     """
     scores = np.clip(scores, 0, 1-1e-16)
     logprob_y0 = np.sum(np.log1p(-scores))
@@ -96,6 +98,8 @@ for itr in xrange(10):
             precs.append(tp/(tp+fp))
             recs.append(tp/(tp+fn))
 
+        # Everything after this point is diagnostic output -- irrelevant to
+        # auc/f1 evaluation.
         if itr>0: continue
         if not args.ent: continue
 
