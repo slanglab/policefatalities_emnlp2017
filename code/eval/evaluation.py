@@ -1,10 +1,9 @@
-from __future__ import division
-from collections import defaultdict
-import sys,random
-import ujson as json
-
 '''
-evaluation script for police fatality models
+Evaluation script for police fatality models.
+It accepts mention-level predictions as input, applies NoisyOR calculation of
+entity-level predictions, and computes 
+  - Area under Precision-Recall curve (AUPRC aka PRAUC)
+  - Max F1
 
 USAGE:  
 cat **PREDS**.json | python evaluation.py 
@@ -22,7 +21,19 @@ For example,
 cat ../preds/m1.json | python evaluation.py
 '''
 
-alldata = [json.loads(line) for line in open("../../data/gold/fatalencs/fe-all.json")]
+from __future__ import division
+from collections import defaultdict
+import sys,random,os
+import json
+
+if sys.stdin.isatty():
+    print "Mention predictions should be on stdin.\n"
+    print __doc__.strip()
+    sys.exit(1)
+
+here = os.path.dirname(__file__)
+fe_all_filename = os.path.join(here, "../../data/gold/fatalencs/fe-all.json")
+alldata = [json.loads(line) for line in open(fe_all_filename)]
 testents = set(d['name'] for d in alldata if '2016-09-01' <= d['date'] <= '2016-12-31')
 histents= set(d['name'] for d in alldata if d['date'] < '2016-09-01')
 histents -= testents  ## person killed in past with same name as test-set person: do NOT count as historical.
@@ -35,21 +46,34 @@ parser.add_argument('--sent', action='store_true')
 args=parser.parse_args()
 if args.sent: args.ent=True
 
+print "Reading mention-level predictions from standard input"
 byname=defaultdict(list)
 for line in sys.stdin:
     d=json.loads(line)
     byname[d['name']].append(d)
 
-print "num sentences", sum(len(xs) for xs in byname.itervalues())
+print "Number of mentions:", sum(len(xs) for xs in byname.itervalues())
+
+def neg_log_not_noisyor(scores):
+    """
+    Assume 'scores' are P(z_i=1) probabilities.
+    Calculate NoisyOR via:
+     log P(y_e=0) = sum_{i in M(e)} log(P(z_i=0))
+    -log P(y_e=0) = sum_{i in M(e)} log(1 - P(z_i=1))
+    """
+    scores = np.clip(scores, 0, 1-1e-16)
+    logprob_y0 = np.sum(np.log1p(-scores))
+    return -logprob_y0
 
 entpred=[]
 import numpy as np
 for name in byname:
     scores = np.array([float(d['weight']) for d in byname[name]])
-    scores = np.clip(scores, 0, 1-1e-16)
-    prob = -np.sum(np.log1p(-scores))
-    entpred.append( (name,prob) )
+    neg_lp_y0 = neg_log_not_noisyor(scores)
+    entpred.append( (name,neg_lp_y0) )
 
+# Calculate AUC several times for different tie-breakings to make sure that's
+# not inducing variability.
 aucs=[]
 for itr in xrange(10):
     entpred.sort(key=lambda (e,p): (-p, random.random()))
@@ -99,7 +123,9 @@ for itr in xrange(10):
     precs=np.array(precs)
     aucs.append(np.trapz(precs,recs))
 
-fs = 2*precs*recs/(precs+recs)
-print "Best recall", recs[-1]
+# fs = 2*precs*recs/(precs+recs)
+fs = [2*p*r/(p+r) if p+r>0 else 0 for (p,r) in zip(precs,recs)]
+assert np.max(recs)==recs[-1]
+print "Best recall", np.max(recs)
 print "Best F1", np.max(fs), "for (p,r)=", precs[np.argmax(fs)],recs[np.argmax(fs)]
-print "AUC",np.mean(aucs), np.std(aucs)
+print "AUC %s (stdev across tiebreakings: %s)" % (np.mean(aucs), np.std(aucs))
