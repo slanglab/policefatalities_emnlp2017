@@ -8,24 +8,32 @@ extrfeats.py
 ====
 Extracts features to be used in logistic regession models. 
 
-EXAMPLE USAGE:
+Run feature extractor from the main directory file. From this directory run
+`
+cd ../../../
 
-Both ngrams and dependencies:
+python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams --deps
 
-`python extrfeats.py data/train.json --deps --ngrams`
+python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams --deps
+` 
 
-Dependency features only:
+For ngram features only:
+`
+cd ../../../
 
-`python extrfeats.py data/test.json --deps`
+python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams 
 
-Ngram features only: 
-`python extrfeats.py data/test.json --ngrams`
+python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams 
+` 
 
-Note: 
-- you will need to download standford corenlp pywrapper (https://github.com/brendano/stanford_corenlp_pywrapper)
-and place it in this directory
-- follow the stanford_corenlp_pywrapper README.md instructions to build
-- then make sure you manually change the CORENLP paths above  
+For dependency features only 
+`
+cd ../../../
+
+python code/models/logreg/extrfeats.py data/sentments/train.json --deps
+
+python code/models/logreg/extrfeats.py data/sentments/test.json --deps
+` 
 
 Breakdown of features extracted
 
