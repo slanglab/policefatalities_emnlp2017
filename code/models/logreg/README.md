@@ -12,7 +12,7 @@ EXAMPLE USAGE:
 
 Both ngrams and dependencies:
 
-`python extrfeats.py data/train.json `
+`python extrfeats.py data/train.json --deps --ngrams`
 
 Dependency features only:
 
@@ -24,6 +24,7 @@ Ngram features only:
 Note: 
 - you will need to download standford corenlp pywrapper (https://github.com/brendano/stanford_corenlp_pywrapper)
 and place it in this directory
+- follow the stanford_corenlp_pywrapper README.md instructions to build
 - then make sure you manually change the CORENLP paths above  
 
 Breakdown of features extracted
