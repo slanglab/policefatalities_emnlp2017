@@ -52,5 +52,12 @@ def main():
     print "----------EM--------------"
     emModel = em.go_em(X_train, X_test, Y_test, E_train, Epos_train, toprint_test, Niter=EM_ITERS)
 
+    #pickle that iteration of models 
+    pkl = 'lr-soft-final.pkl'
+    w = open(pkl, 'w')
+    pickle.dump(emModel, w)
+    w.close()
+    #print "model saved to ", pkl
+
 if __name__ == "__main__":
     main()
