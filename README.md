@@ -56,23 +56,15 @@ The evaluation code requries predictions in the following json format (see `code
 - "weight" : prediction on that mention given by the model
 - "name" : name of the potential victim associated with that mention
 
+RUNNING THE MODEL PIPELINE
+======
+To run the current model (logistic regression with EM training) with train/test data after pre-processing: 
+`./run.sh`
 
-MENTION-LEVEL DATA
+
+MODEL PIPELINE OUTLINE
 ==========
-The preprocessed data used for this paper is `data/sentments/train.json` and `data/sentments/test.json`.
 
-For both files, each line corresponds to a single mention with dictionary keys:
-- "docid": document id  
-- "name": HAPNIS normalized firstname, lastname pair of that is mapped to the 'TARGET' symbol
-- "names_org": un-normalized names corresponding to 'name' that originally appeared in the text
-- "sentnames": other names in the mention that will be mapped to 'PERSON' symbol
-- "downloadtime": time the document was downloaded
-- "sent_org": original mention text
-- "sent_alter": mention text with names replaced by 'TARGET' and 'PERSON' symbols
-- "plabel": 1 if 'name' matches a gold standard victim name in Fatal Encounters, 0 otherwise
-
-PIPELINE OUTLINE
-==========
 Here's an outline for the pipeline for soft (EM-based logistic regression):
 
 1. Extract features
@@ -88,6 +80,21 @@ Here's an outline for the pipeline for soft (EM-based logistic regression):
 3. Evaluate 
 
 `cat code/models/preds/em50.json | python code/eval/evaluation.py`
+
+
+MENTION-LEVEL DATA
+==========
+The preprocessed data used for this paper is `data/sentments/train.json` and `data/sentments/test.json`.
+
+For both files, each line corresponds to a single mention with dictionary keys:
+- "docid": document id  
+- "name": HAPNIS normalized firstname, lastname pair of that is mapped to the 'TARGET' symbol
+- "names_org": un-normalized names corresponding to 'name' that originally appeared in the text
+- "sentnames": other names in the mention that will be mapped to 'PERSON' symbol
+- "downloadtime": time the document was downloaded
+- "sent_org": original mention text
+- "sent_alter": mention text with names replaced by 'TARGET' and 'PERSON' symbols
+- "plabel": 1 if 'name' matches a gold standard victim name in Fatal Encounters, 0 otherwise
 
 CODE DEPENDENCIES
 ============
