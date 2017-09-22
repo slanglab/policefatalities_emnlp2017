@@ -36,8 +36,11 @@ Contact: Katherine Keith (kkeith@cs.umass.edu), Brendan O'Connor (brenocon@cs.um
             - normnames.py : name normalization
             - getsentment.py : matches extracted sentences against gold data
 
-- requirements.txt pip installed packages in requirements format
+- requirements.txt : pip installed packages in requirements format
 
+- run.sh : runs the entire model pipleine (with data-pre-processed)
+
+- run_pretrained.sh : runs the model pipeline with the pre-trained model for the given test data 
 
 TRAIN/TEST SPLIT
 =======
@@ -58,11 +61,15 @@ The evaluation code requries predictions in the following json format (see `code
 - "weight" : prediction on that mention given by the model
 - "name" : name of the potential victim associated with that mention
 
-RUN CURRENT MODEL PIPELINE
+RUNNING MODELS
 ======
 To run the current model (logistic regression with EM training) with train/test data after pre-processing: 
 
 `./run.sh`
+
+To run the pre-trained model on test data 
+
+`./run_pretrained.sh`
 
 
 MODEL PIPELINE OUTLINE
