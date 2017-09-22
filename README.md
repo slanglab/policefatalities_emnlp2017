@@ -35,6 +35,8 @@ Contact: Katherine Keith (kkeith@cs.umass.edu), Brendan O'Connor (brenocon@cs.um
             - hap/ : HAPNIS name normalization code
             - normnames.py : name normalization
             - getsentment.py : matches extracted sentences against gold data
+            
+- requirements.txt pip installed packages in requirements format
 
 
 TRAIN/TEST SPLIT
