@@ -35,7 +35,7 @@ Contact: Katherine Keith (kkeith@cs.umass.edu), Brendan O'Connor (brenocon@cs.um
             - hap/ : HAPNIS name normalization code
             - normnames.py : name normalization
             - getsentment.py : matches extracted sentences against gold data
-            
+
 - requirements.txt pip installed packages in requirements format
 
 
@@ -58,9 +58,10 @@ The evaluation code requries predictions in the following json format (see `code
 - "weight" : prediction on that mention given by the model
 - "name" : name of the potential victim associated with that mention
 
-RUNNING THE MODEL PIPELINE
+RUN CURRENT MODEL PIPELINE
 ======
 To run the current model (logistic regression with EM training) with train/test data after pre-processing: 
+
 `./run.sh`
 
 
