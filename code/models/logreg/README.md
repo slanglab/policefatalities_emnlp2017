@@ -19,7 +19,8 @@ python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams --deps
 ```
 
 For ngram features only:
-````
+
+```
 cd ../../../
 
 python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams 
@@ -28,6 +29,7 @@ python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams
 ``` 
 
 For dependency features only 
+
 ```
 cd ../../../
 
