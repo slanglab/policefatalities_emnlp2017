@@ -10,7 +10,8 @@ Extracts features to be used in logistic regession models.
 
 Run feature extractor from the main directory file. From this directory run
 
-`cd ../../../
+```
+cd ../../../
 
 python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams --deps
 
@@ -23,7 +24,7 @@ cd ../../../
 python code/models/logreg/extrfeats.py data/sentments/train.json --ngrams 
 
 python code/models/logreg/extrfeats.py data/sentments/test.json --ngrams 
-` 
+``` 
 
 For dependency features only 
 `
