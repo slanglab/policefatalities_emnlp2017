@@ -37,9 +37,10 @@ def main():
     arg_parser.add_argument('test', type=str, help='testing .json file, both 0 and 1 examples')
     arg_parser.add_argument('X_train', type=str, nargs='?', help='training feature matrix, like train.mtx')
     arg_parser.add_argument('X_test', type=str, nargs='?', help='testing feature matrix, like test.mtx')
+    arg_parser.add_argument('--emiters', type=int, help='number of iters for EM', default=50)
     args = arg_parser.parse_args()
 
-    EM_ITERS = 50 
+    EM_ITERS = args.emiters 
 
     #---FULL DATASET-----
     Y_train, E_train, Epos_train, toprint_train = read_file(args.train)
