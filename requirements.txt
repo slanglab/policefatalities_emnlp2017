@@ -1,6 +1,6 @@
 html5lib==0.999999999
 murmurhash==0.26.4
-nltk==3.2.4
+nltk==3.4.5
 numpy==1.13.1
 pandas==0.20.3
 pathlib==1.0.1
