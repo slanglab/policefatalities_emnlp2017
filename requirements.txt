@@ -16,4 +16,4 @@ spacy==1.9.0
 stanford-corenlp-pywrapper==0.1.0
 ujson==1.35
 Unidecode==0.4.21
-urllib3==1.22
+urllib3==1.26.5
