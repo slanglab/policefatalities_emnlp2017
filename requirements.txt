@@ -14,6 +14,6 @@ scikit-learn==0.19.0
 scipy==0.19.1
 spacy==1.9.0
 stanford-corenlp-pywrapper==0.1.0
-ujson==1.35
+ujson==5.2.0
 Unidecode==0.4.21
 urllib3==1.22
